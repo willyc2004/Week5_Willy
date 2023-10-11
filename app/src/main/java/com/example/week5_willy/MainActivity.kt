@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    ListMovieView(DataSource().loadMovie())
+                    //No1View(viewModel = No1ViewModel())
                 }
             }
         }
