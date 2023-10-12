@@ -185,9 +185,7 @@ fun No2View(
                         val newNo2Model = No2Model(
                             SKS = sksValue,
                             nilai = scoreValue,
-                            name = nameValue,
-                            IPK = "",
-                            totalSKS = ""
+                            name = nameValue
                         )
                         viewModel.addNo2Model(newNo2Model)
 
