@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.week5_willy.ui.theme.green
 import com.example.week5_willy.viewmodel.No1ViewModel
+import kotlin.system.exitProcess
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -189,7 +190,7 @@ fun No1View(
                                 text = "Exit",
                                 fontSize = 16.sp,
                                 color = Color.Blue,
-                                modifier = Modifier.clickable { System.exit(0) }
+                                modifier = Modifier.clickable { exitProcess(0) }
                             )
 
                             Text(

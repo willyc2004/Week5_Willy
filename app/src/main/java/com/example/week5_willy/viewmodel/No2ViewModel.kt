@@ -19,11 +19,20 @@ class No2ViewModel : ViewModel() {
     fun removeNo2Model(no2Model: No2Model) {
         _uiState.value = _uiState.value - no2Model
     }
-    fun calculateTotalSKSAndIPK(): Pair<Int, String> {
-        val models = _uiState.value
 
-        val totalSKS = models.sumOf { it.SKS }
-        val totalNilai = models.sumOf { it.SKS * it.nilai }
+    fun totalSKS(): Int {
+        val curr = _uiState.value
+
+        val totalSKS = curr.sumOf { it.SKS }
+
+        return totalSKS
+    }
+
+    fun totalIPK() : String {
+        val curr = _uiState.value
+
+        val totalSKS = curr.sumOf { it.SKS }
+        val totalNilai = curr.sumOf { it.SKS * it.nilai }
 
         val ipk = if (totalSKS != 0) {
             String.format("%.2f", totalNilai / totalSKS)
@@ -31,12 +40,8 @@ class No2ViewModel : ViewModel() {
             "0.00"
         }
 
-        return totalSKS to ipk
+        return ipk
     }
-
-
-
-
 }
 
 

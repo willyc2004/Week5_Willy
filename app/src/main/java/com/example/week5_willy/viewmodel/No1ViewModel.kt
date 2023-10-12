@@ -15,30 +15,31 @@ class No1ViewModel : ViewModel() {
     val uiState: StateFlow<No1Model> = _uiState.asStateFlow()
     fun onGuess(guess: Int) {
         viewModelScope.launch {
-            val currentState = uiState.value
+            val curr = _uiState.value
 
-            if (guess == currentState.number) {
-                val updatedState = currentState.copy(
-                    score = currentState.score + 1,
+            if (guess == curr.number) {
+                //bener
+                val update = curr.copy(
+                    score = curr.score + 1,
                     number = generateRandomNumber()
                 )
-                _uiState.value = updatedState
+                _uiState.value = update
 
-                if (updatedState.score == 3) {
+                if (update.score == 3) {
                     //win
-                    _uiState.value = updatedState.copy(gameWin = true)
+                    _uiState.value = update.copy(gameWin = true)
                 }
 
             } else {
-                // Incorrect guess
-                val updatedChances = currentState.chances + 1
-                val updatedState = currentState.copy(
-                    chances = updatedChances
+                // Salah
+                val update = curr.copy(
+                    chances = curr.chances + 1
                 )
-                _uiState.value = updatedState
+                _uiState.value = update
 
-                if (updatedChances == 3) {
-                    _uiState.value = updatedState.copy(gameOver = true)
+                if (update.chances == 3) {
+                    //lose
+                    _uiState.value = update.copy(gameOver = true)
                 }
             }
         }
