@@ -42,6 +42,20 @@ class No2ViewModel : ViewModel() {
 
         return ipk
     }
+
+    fun isValidScore(score: String): Boolean {
+        try {
+            val scoreValue = score.toDouble()
+            return scoreValue > 0.0 && scoreValue <= 4.0
+        } catch (e: NumberFormatException) {
+            return false
+        }
+    }
+
+    fun isValidSKS(sks: String): Boolean {
+        val sksPattern = Regex("^[1-9]\\d*$")
+        return sksPattern.matches(sks)
+    }
 }
 
 

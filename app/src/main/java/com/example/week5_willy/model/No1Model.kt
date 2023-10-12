@@ -4,8 +4,7 @@ data class No1Model(
     val number: Int,
     val chances: Int,
     val score: Int,
-    val gameOver: Boolean,
-    val gameWin: Boolean
+    val endGame: Boolean
 )
 
 

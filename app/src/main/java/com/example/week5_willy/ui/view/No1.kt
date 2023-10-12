@@ -48,7 +48,6 @@ fun No1View(
 ) {
     var ans by rememberSaveable { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
-    var showDialog by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -126,11 +125,8 @@ fun No1View(
                 )
             }
         }
-        if (uiState.gameWin) {
-            showDialog = true
-        }
 
-        if (!uiState.gameOver) {
+
             Button(
                 onClick = {
                     if (ans.isNotBlank()) {
@@ -149,13 +145,11 @@ fun No1View(
             ) {
                 Text(text = "Submit")
             }
-        } else {
-            showDialog = true
-        }
 
-        if (showDialog) {
+
+        if (uiState.endGame) {
             Dialog(
-                onDismissRequest = { showDialog = false }
+                onDismissRequest = { viewModel.restartGame() }
             ) {
                 Box(
                     modifier = Modifier
@@ -199,7 +193,6 @@ fun No1View(
                                 color = Color.Blue,
                                 modifier = Modifier.clickable {
                                     viewModel.restartGame()
-                                    showDialog = false
                                 }
                             )
                         }

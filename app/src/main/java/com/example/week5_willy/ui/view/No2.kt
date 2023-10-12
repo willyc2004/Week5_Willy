@@ -86,61 +86,78 @@ fun No2View(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(65.dp),
+                .height(85.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
-            OutlinedTextField(
-                value = sks,
-                onValueChange = {
-                    sks = it
-                },
-                label = {
-                    Text("SKS", modifier = Modifier.padding(start = 5.dp))
-                },
-                shape = RoundedCornerShape(5.dp),
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f)
-                    .align(Alignment.CenterVertically)
-                    .padding(horizontal = 10.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.Gray,
-                    unfocusedBorderColor = Color.Gray,
-                    textColor = Color.Black
+            Column(Modifier.fillMaxHeight().weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                OutlinedTextField(
+                    value = sks,
+                    onValueChange = {
+                        sks = it
+                    },
+                    label = {
+                        Text("SKS", modifier = Modifier.padding(start = 5.dp))
+                    },
+                    shape = RoundedCornerShape(5.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .height(65.dp),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Gray,
+                        unfocusedBorderColor = Color.Gray,
+                        textColor = Color.Black
+                    )
                 )
-            )
 
+                if (!viewModel.isValidSKS(sks)) {
+                    Text(
+                        "SKS wrong",
+                        modifier = Modifier
+                            .height(20.dp),
+                        color = Color.Red
+                    )
+                }
+            }
 
-            OutlinedTextField(
-                value = score,
-                onValueChange = {
-                    score = it
-                },
-                label = {
-                    Text("Score", modifier = Modifier.padding(start = 5.dp))
-                },
-                shape = RoundedCornerShape(5.dp),
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f)
-                    .align(Alignment.CenterVertically)
-                    .padding(horizontal = 10.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.Gray,
-                    unfocusedBorderColor = Color.Gray,
-                    textColor = Color.Black
+            Column(Modifier.fillMaxHeight().weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                OutlinedTextField(
+                    value = score,
+                    onValueChange = {
+                        score = it
+                    },
+                    label = {
+                        Text("Score", modifier = Modifier.padding(start = 5.dp))
+                    },
+                    shape = RoundedCornerShape(5.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .height(65.dp),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Gray,
+                        unfocusedBorderColor = Color.Gray,
+                        textColor = Color.Black
+                    )
                 )
-            )
+                if (!viewModel.isValidScore(score)) {
+                    Text(
+                        "Score wrong",
+                        modifier = Modifier
+                            .height(20.dp),
+                        color = Color.Red
+                    )
+                }
+            }
+
+
         }
 
         Row(
@@ -177,11 +194,12 @@ fun No2View(
 
             Button(
                 onClick = {
-                    val sksValue = sks.toIntOrNull()
-                    val scoreValue = score.toDoubleOrNull()
-                    val nameValue = name
+                    if (viewModel.isValidScore(score) && viewModel.isValidSKS(sks)) {
+                        val sksValue = sks.toInt()
+                        val scoreValue = score.toDouble()
+                        val nameValue = name
 
-                    if (sksValue != null && scoreValue != null && nameValue.isNotBlank()) {
+
                         val newNo2Model = No2Model(
                             SKS = sksValue,
                             nilai = scoreValue,
@@ -246,7 +264,7 @@ fun No2View(
                             Icons.Filled.Delete,
                             contentDescription = null,
                             modifier = Modifier
-                                .size(40.dp)
+                                .size(50.dp)
                                 .padding(10.dp)
                                 .clickable {
                                     viewModel.removeNo2Model(no2Model)
@@ -261,7 +279,6 @@ fun No2View(
         }
     }
 }
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

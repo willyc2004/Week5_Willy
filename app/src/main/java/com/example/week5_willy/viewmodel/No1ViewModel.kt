@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class No1ViewModel : ViewModel() {
     val newNumber = generateRandomNumber()
 
-    private val _uiState = MutableStateFlow(No1Model(number = newNumber, chances = 0, score = 0, gameOver = false, gameWin = false))
+    private val _uiState = MutableStateFlow(No1Model(number = newNumber, chances = 0, score = 0, endGame = false))
     val uiState: StateFlow<No1Model> = _uiState.asStateFlow()
     fun onGuess(guess: Int) {
         viewModelScope.launch {
@@ -27,7 +27,7 @@ class No1ViewModel : ViewModel() {
 
                 if (update.score == 3) {
                     //win
-                    _uiState.value = update.copy(gameWin = true)
+                    _uiState.value = update.copy(endGame = true)
                 }
 
             } else {
@@ -39,7 +39,7 @@ class No1ViewModel : ViewModel() {
 
                 if (update.chances == 3) {
                     //lose
-                    _uiState.value = update.copy(gameOver = true)
+                    _uiState.value = update.copy(endGame = true)
                 }
             }
         }
@@ -50,8 +50,7 @@ class No1ViewModel : ViewModel() {
             number = newNumber,
             chances = 0,
             score = 0,
-            gameOver = false,
-            gameWin = false
+            endGame = false
         )
     }
 }
