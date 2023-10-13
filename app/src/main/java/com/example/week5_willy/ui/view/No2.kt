@@ -208,7 +208,7 @@ fun No2View(
                     .padding(top = 6.dp)
                     .background(Color.Transparent),
                 shape = RoundedCornerShape(20.dp),
-                enabled = sks.isNotBlank() && score.isNotBlank() && name.isNotBlank()
+                enabled = sks.isNotBlank() && score.isNotBlank() && name.isNotBlank() && viewModel.isValidScore(score) && viewModel.isValidSKS(sks)
             ) {
                 Text(
                     text = "+",

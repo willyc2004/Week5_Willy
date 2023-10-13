@@ -14,7 +14,7 @@ class No2ViewModel : ViewModel() {
 
     fun addNo2Model(sks: String, score: String, name : String) {
         val sksValue = sks.toInt()
-        val scoreValue = score.toDouble()
+        val scoreValue = formatScore(score)
 
         val no2Model = No2Model(
             SKS = sksValue,
@@ -30,6 +30,12 @@ class No2ViewModel : ViewModel() {
 
     fun totalSKS(uiState: List<No2Model>): Int {
         return uiState.sumOf { it.SKS }
+    }
+
+    private fun formatScore(score: String): Double {
+        val scoreValue = score.toDouble()
+        val scoreFormat = String.format("%.2f", scoreValue)
+        return scoreFormat.toDouble()
     }
 
     fun totalIPK(uiState: List<No2Model>): String {
