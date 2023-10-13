@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class No1ViewModel : ViewModel() {
-    val newNumber = generateRandomNumber()
+    private val newNumber = generateRandomNumber()
 
     private val _uiState = MutableStateFlow(No1Model(number = newNumber, chances = 0, score = 0, endGame = false))
     val uiState: StateFlow<No1Model> = _uiState.asStateFlow()
-    fun onGuess(guess: Int) {
+    fun onGuess(guess: String) {
         viewModelScope.launch {
             val curr = _uiState.value
 
-            if (guess == curr.number) {
+            if (guess.toInt() == curr.number) {
                 //bener
                 val update = curr.copy(
                     score = curr.score + 1,

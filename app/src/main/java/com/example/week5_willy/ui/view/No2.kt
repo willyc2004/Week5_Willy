@@ -41,13 +41,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.week5_willy.model.No2Model
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.week5_willy.viewmodel.No2ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun No2View(
-    viewModel: No2ViewModel,
+    viewModel: No2ViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -86,7 +86,7 @@ fun No2View(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(85.dp),
+                .height(88.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -118,7 +118,7 @@ fun No2View(
                     Text(
                         "SKS wrong",
                         modifier = Modifier
-                            .height(20.dp),
+                            .height(23.dp),
                         color = Color.Red
                     )
                 }
@@ -151,7 +151,7 @@ fun No2View(
                     Text(
                         "Score wrong",
                         modifier = Modifier
-                            .height(20.dp),
+                            .height(23.dp),
                         color = Color.Red
                     )
                 }
@@ -195,18 +195,8 @@ fun No2View(
             Button(
                 onClick = {
                     if (viewModel.isValidScore(score) && viewModel.isValidSKS(sks)) {
-                        val sksValue = sks.toInt()
-                        val scoreValue = score.toDouble()
-                        val nameValue = name
 
-
-                        val newNo2Model = No2Model(
-                            SKS = sksValue,
-                            nilai = scoreValue,
-                            name = nameValue
-                        )
-                        viewModel.addNo2Model(newNo2Model)
-
+                        viewModel.addNo2Model(sks, score, name)
                         sks = ""
                         score = ""
                         name = ""
@@ -268,8 +258,9 @@ fun No2View(
                                 .padding(10.dp)
                                 .clickable {
                                     viewModel.removeNo2Model(no2Model)
-                                    sks = " "
                                     sks = ""
+                                    score = ""
+                                    name = ""
                                 },
                             tint = Color.Red
                         )
@@ -283,5 +274,5 @@ fun No2View(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun No2Preview() {
-    No2View(viewModel = No2ViewModel())
+    No2View()
 }

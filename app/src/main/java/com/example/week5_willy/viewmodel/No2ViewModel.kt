@@ -12,7 +12,15 @@ class No2ViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<List<No2Model>>(emptyList())
     val uiState: StateFlow<List<No2Model>> = _uiState.asStateFlow()
 
-    fun addNo2Model(no2Model: No2Model) {
+    fun addNo2Model(sks: String, score: String, name : String) {
+        val sksValue = sks.toInt()
+        val scoreValue = score.toDouble()
+
+        val no2Model = No2Model(
+            SKS = sksValue,
+            nilai = scoreValue,
+            name = name
+        )
         _uiState.value = _uiState.value + no2Model
     }
 
@@ -22,10 +30,7 @@ class No2ViewModel : ViewModel() {
 
     fun totalSKS(): Int {
         val curr = _uiState.value
-
-        val totalSKS = curr.sumOf { it.SKS }
-
-        return totalSKS
+        return curr.sumOf { it.SKS }
     }
 
     fun totalIPK() : String {
@@ -44,11 +49,11 @@ class No2ViewModel : ViewModel() {
     }
 
     fun isValidScore(score: String): Boolean {
-        try {
+        return try {
             val scoreValue = score.toDouble()
-            return scoreValue > 0.0 && scoreValue <= 4.0
+            scoreValue > 0.0 && scoreValue <= 4.0
         } catch (e: NumberFormatException) {
-            return false
+            false
         }
     }
 
