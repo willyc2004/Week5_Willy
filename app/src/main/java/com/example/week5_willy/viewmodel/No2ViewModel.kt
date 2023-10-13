@@ -28,16 +28,13 @@ class No2ViewModel : ViewModel() {
         _uiState.value = _uiState.value - no2Model
     }
 
-    fun totalSKS(): Int {
-        val curr = _uiState.value
-        return curr.sumOf { it.SKS }
+    fun totalSKS(uiState: List<No2Model>): Int {
+        return uiState.sumOf { it.SKS }
     }
 
-    fun totalIPK() : String {
-        val curr = _uiState.value
-
-        val totalSKS = curr.sumOf { it.SKS }
-        val totalNilai = curr.sumOf { it.SKS * it.nilai }
+    fun totalIPK(uiState: List<No2Model>): String {
+        val totalSKS = uiState.sumOf { it.SKS }
+        val totalNilai = uiState.sumOf { it.SKS * it.nilai }
 
         val ipk = if (totalSKS != 0) {
             String.format("%.2f", totalNilai / totalSKS)

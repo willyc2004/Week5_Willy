@@ -69,7 +69,7 @@ fun No2View(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Total SKS: ${viewModel.totalSKS()}",
+            text = "Total SKS: ${viewModel.totalSKS(uiState)}",
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal
         )
@@ -77,7 +77,7 @@ fun No2View(
         Spacer(modifier = Modifier.height(5.dp))
 
         Text(
-            text = "IPK: ${viewModel.totalIPK()}",
+            text = "IPK: ${viewModel.totalIPK(uiState)}",
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal
         )
