@@ -123,7 +123,8 @@ fun No1View(
                     },
                     shape = RoundedCornerShape(18.dp),
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(horizontal = 5.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done
@@ -133,7 +134,8 @@ fun No1View(
                         unfocusedBorderColor = Color.Blue,
                         textColor = Color.Black,
                         focusedLabelColor = Color.Blue,
-                        unfocusedLabelColor = Color.Blue
+                        unfocusedLabelColor = Color.Blue,
+                        containerColor = Color.White
                     )
                 )
             }
@@ -172,7 +174,8 @@ fun No1View(
                 Box(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth().clip(RoundedCornerShape(12.dp))
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
                 ) {
                     Column(
                         modifier = Modifier
