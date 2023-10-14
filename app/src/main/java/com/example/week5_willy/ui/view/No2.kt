@@ -42,148 +42,90 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.week5_willy.model.No2Model
 import com.example.week5_willy.viewmodel.No2ViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun No2View(
     viewModel: No2ViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)
+    ) {
+
+        item { KuliahInput(viewModel) }
+        items(uiState) { no2Model ->
+            KuliahCard(no2Model, viewModel)
+        }
+    }
+
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KuliahInput(viewModel: No2ViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+
     var sks by rememberSaveable { mutableStateOf("") }
     var score by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
 
-    Column(
+    Text(
+        text = "Courses",
+        fontSize = 30.sp,
+        fontWeight = FontWeight.Bold
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Text(
+        text = "Total SKS: ${viewModel.totalSKS(uiState)}",
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    )
+
+    Spacer(modifier = Modifier.height(5.dp))
+
+    Text(
+        text = "IPK: ${viewModel.totalIPK(uiState)}",
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    )
+    Spacer(modifier = Modifier.height(5.dp))
+
+    Row(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
+            .fillMaxWidth()
+            .height(88.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = "Courses",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Total SKS: ${viewModel.totalSKS(uiState)}",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Normal
-        )
-
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Text(
-            text = "IPK: ${viewModel.totalIPK(uiState)}",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Normal
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(88.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(Modifier.fillMaxHeight().weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                OutlinedTextField(
-                    value = sks,
-                    onValueChange = {
-                        sks = it
-                    },
-                    label = {
-                        Text("SKS", modifier = Modifier.padding(start = 5.dp))
-                    },
-                    shape = RoundedCornerShape(5.dp),
-                    modifier = Modifier
-                        .padding(horizontal = 10.dp)
-                        .height(65.dp),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Next
-                    ),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color.Gray,
-                        unfocusedBorderColor = Color.Gray,
-                        textColor = Color.Black
-                    )
-                )
-
-                if (!viewModel.isValidSKS(sks)) {
-                    Text(
-                        "SKS wrong",
-                        modifier = Modifier
-                            .height(23.dp),
-                        color = Color.Red
-                    )
-                }
-            }
-
-            Column(Modifier.fillMaxHeight().weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                OutlinedTextField(
-                    value = score,
-                    onValueChange = {
-                        score = it
-                    },
-                    label = {
-                        Text("Score", modifier = Modifier.padding(start = 5.dp))
-                    },
-                    shape = RoundedCornerShape(5.dp),
-                    modifier = Modifier
-                        .padding(horizontal = 10.dp)
-                        .height(65.dp),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Next
-                    ),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color.Gray,
-                        unfocusedBorderColor = Color.Gray,
-                        textColor = Color.Black
-                    )
-                )
-                if (!viewModel.isValidScore(score)) {
-                    Text(
-                        "Score wrong",
-                        modifier = Modifier
-                            .height(23.dp),
-                        color = Color.Red
-                    )
-                }
-            }
-
-
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(65.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                value = name,
+                value = sks,
                 onValueChange = {
-                    name = it
+                    sks = it
                 },
                 label = {
-                    Text("Name", modifier = Modifier.padding(start = 5.dp))
+                    Text("SKS", modifier = Modifier.padding(start = 5.dp))
                 },
                 shape = RoundedCornerShape(5.dp),
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(2f)
-                    .align(Alignment.CenterVertically)
-                    .padding(horizontal = 10.dp),
+                    .padding(horizontal = 10.dp)
+                    .height(65.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
                 ),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Gray,
@@ -192,84 +134,163 @@ fun No2View(
                 )
             )
 
-            Button(
-                onClick = {
-                    if (viewModel.isValidScore(score) && viewModel.isValidSKS(sks)) {
-
-                        viewModel.addNo2Model(sks, score, name)
-                        sks = ""
-                        score = ""
-                        name = ""
-                    }
-                },
-                modifier = Modifier
-                    .height(65.dp)
-                    .width(100.dp)
-                    .padding(top = 6.dp)
-                    .background(Color.Transparent),
-                shape = RoundedCornerShape(20.dp),
-                enabled = sks.isNotBlank() && score.isNotBlank() && name.isNotBlank() && viewModel.isValidScore(score) && viewModel.isValidSKS(sks)
-            ) {
+            if (!viewModel.isValidSKS(sks)) {
                 Text(
-                    text = "+",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    modifier = Modifier.background(Color.Transparent),
+                    "SKS wrong",
+                    modifier = Modifier
+                        .height(23.dp),
+                    color = Color.Red
                 )
             }
         }
-        LazyColumn() {
-            items(uiState) { no2Model ->
-                Card(
+
+        Column(
+            Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            OutlinedTextField(
+                value = score,
+                onValueChange = {
+                    score = it
+                },
+                label = {
+                    Text("Score", modifier = Modifier.padding(start = 5.dp))
+                },
+                shape = RoundedCornerShape(5.dp),
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .height(65.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Gray,
+                    unfocusedBorderColor = Color.Gray,
+                    textColor = Color.Black
+                )
+            )
+            if (!viewModel.isValidScore(score)) {
+                Text(
+                    "Score wrong",
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp)
-                ) {
-
-                    Row(
-                        modifier = Modifier
-                            .padding(20.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column() {
-                            Text(
-                                text = "Course Name: ${no2Model.name}",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                text = "SKS: ${no2Model.SKS}",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Text(
-                                text = "Score: ${no2Model.nilai}",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                        }
-
-                        Icon(
-                            Icons.Filled.Delete,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(10.dp)
-                                .clickable {
-                                    viewModel.removeNo2Model(no2Model)
-                                    sks = ""
-                                    score = ""
-                                    name = ""
-                                },
-                            tint = Color.Red
-                        )
-                    }
-                }
+                        .height(23.dp),
+                    color = Color.Red
+                )
             }
         }
     }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(65.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        OutlinedTextField(
+            value = name,
+            onValueChange = {
+                name = it
+            },
+            label = {
+                Text("Name", modifier = Modifier.padding(start = 5.dp))
+            },
+            shape = RoundedCornerShape(5.dp),
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(2f)
+                .align(Alignment.CenterVertically)
+                .padding(horizontal = 10.dp),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color.Gray,
+                unfocusedBorderColor = Color.Gray,
+                textColor = Color.Black
+            )
+        )
+
+        Button(
+            onClick = {
+                if (viewModel.isValidScore(score) && viewModel.isValidSKS(sks)) {
+
+                    viewModel.addNo2Model(sks, score, name)
+                    sks = ""
+                    score = ""
+                    name = ""
+                }
+            },
+            modifier = Modifier
+                .height(65.dp)
+                .width(100.dp)
+                .padding(top = 6.dp)
+                .background(Color.Transparent),
+            shape = RoundedCornerShape(20.dp),
+            enabled = sks.isNotBlank() && score.isNotBlank() && name.isNotBlank() && viewModel.isValidScore(
+                score
+            ) && viewModel.isValidSKS(sks)
+        ) {
+            Text(
+                text = "+",
+                color = Color.White,
+                fontSize = 20.sp,
+                modifier = Modifier.background(Color.Transparent),
+            )
+        }
+    }
 }
+
+@Composable
+fun KuliahCard(no2Model: No2Model, viewModel: No2ViewModel) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(
+                    text = "Course Name: ${no2Model.name}",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "SKS: ${no2Model.SKS}",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal
+                )
+                Text(
+                    text = "Score: ${no2Model.nilai}",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            }
+
+            Icon(
+                Icons.Filled.Delete,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(50.dp)
+                    .padding(10.dp)
+                    .clickable {
+                        viewModel.removeNo2Model(no2Model)
+                    },
+                tint = Color.Red
+            )
+        }
+    }
+}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
