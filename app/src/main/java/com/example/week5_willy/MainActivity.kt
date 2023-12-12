@@ -8,7 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.week5_willy.ui.theme.Week5_WillyTheme
-import com.example.week5_willy.ui.view.No2View
+import com.example.week5_willy.ui.view.No1View
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +20,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White
                 ) {
-//                    No1View()
-                    No2View()
+                    No1View()
+//                    No2View()
                 }
             }
         }
